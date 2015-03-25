@@ -1,0 +1,4 @@
+Age;subjects[1].marks;subjects[1].name;subjects[2].marks;subjects[2].name;studentName;subjects[3].marks;subjects[3].name
+12;40;English;50;History;Foo;;
+12;40;English;50;History;Bar;40;Science
+12;;;;;Baz;;
