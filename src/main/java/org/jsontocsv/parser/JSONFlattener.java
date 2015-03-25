@@ -72,9 +72,9 @@ public class JSONFlattener {
             json = IOUtils.toString(uri, encoding);
             flatJson = parseJson(json);
         } catch (IOException e) {
-            LOGGER.error("JsonFlattener#ParseJson(File file) IOException: ", e);
+            LOGGER.error("JsonFlattener#ParseJson(uri, encoding) IOException: ", e);
         } catch (Exception ex) {
-            LOGGER.error("JsonFlattener#ParseJson(File file) Exception: ", ex);
+            LOGGER.error("JsonFlattener#ParseJson(uri, encoding) Exception: ", ex);
         }
 
         return flatJson;
@@ -104,9 +104,9 @@ public class JSONFlattener {
             json = FileUtils.readFileToString(file, encoding);
             flatJson = parseJson(json);
         } catch (IOException e) {
-            LOGGER.error("JsonFlattener#ParseJson(File file) IOException: ", e);
+            LOGGER.error("JsonFlattener#ParseJson(file, encoding) IOException: ", e);
         } catch (Exception ex) {
-            LOGGER.error("JsonFlattener#ParseJson(File file) Exception: ", ex);
+            LOGGER.error("JsonFlattener#ParseJson(file, encoding) Exception: ", ex);
         }
 
         return flatJson;

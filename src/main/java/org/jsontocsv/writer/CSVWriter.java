@@ -75,7 +75,7 @@ public class CSVWriter {
         try {
             FileUtils.write(new File(fileName), csvString);
         } catch (IOException e) {
-            LOGGER.error("CSVWriter#writeToFile(output, fileName) IOException: ", e);
+            LOGGER.error("CSVWriter#writeToFile(csvString, fileName) IOException: ", e);
         }
     }
 

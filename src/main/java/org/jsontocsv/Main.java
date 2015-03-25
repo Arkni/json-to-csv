@@ -37,7 +37,7 @@ public class Main {
         /*
          *  Parse a JSON File and convert it to CSV
          */
-        flatJson = JSONFlattener.parseJson(new File(System.getProperty("user.dir") + "/files/simple.json"), "UTF-8");
+        flatJson = JSONFlattener.parseJson(new File("files/simple.json"), "UTF-8");
         // Using ';' as separator
         CSVWriter.writeToFile(CSVWriter.getCSV(flatJson, ";"), "files/sample_file.csv");
 
