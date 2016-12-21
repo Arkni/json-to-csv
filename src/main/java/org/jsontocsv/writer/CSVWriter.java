@@ -18,11 +18,15 @@ package org.jsontocsv.writer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -78,6 +82,33 @@ public class CSVWriter {
             LOGGER.error("CSVWriter#writeToFile(csvString, fileName) IOException: ", e);
         }
     }
+    
+    /**
+     * Write the given CSV from a flat json to the given file.
+     * 
+     * @param flatJson
+     * @param separator
+     * @param fileName 
+     * @param headers
+     */
+    public static void writeLargeFile(List<Map<String, String>> flatJson, String separator, String fileName, Set<String> headers){
+    	String csvString;
+        csvString = StringUtils.join(headers.toArray(), separator) + "\n";
+        File file = new File(fileName);
+        
+        try {
+            // ISO8859_1 char code to Latin alphabet
+            FileUtils.write(file, csvString, "ISO8859_1");
+            
+            for (Map<String, String> map : flatJson) {
+            	csvString = "";
+            	csvString = getSeperatedColumns(headers, map, separator) + "\n";
+            	Files.write(Paths.get(fileName), csvString.getBytes("ISO8859_1"), StandardOpenOption.APPEND);
+            }            
+        } catch (IOException e) {
+            LOGGER.error("CSVWriter#writeLargeFile(flatJson, separator, fileName, headers) IOException: ", e);
+        }
+    }    
 
     /**
      * Get separated comlumns used a separator (comma, semi column, tab).
@@ -90,7 +121,7 @@ public class CSVWriter {
     private static String getSeperatedColumns(Set<String> headers, Map<String, String> map, String separator) {
         List<String> items = new ArrayList<String>();
         for (String header : headers) {
-            String value = map.get(header) == null ? "" : map.get(header).replace(",", "");
+            String value = map.get(header) == null ? "" : map.get(header).replaceAll("[\\,\\;\\r\\n\\t\\s]+", " "); 
             items.add(value);
         }
 
@@ -113,4 +144,19 @@ public class CSVWriter {
 
         return headers;
     }
+
+    /**
+     * Get the CSV ordered header
+     *
+     * @param flatJson
+     *
+     * @return a Set of ordered headers
+     */
+    public static Set<String> collectOrderedHeaders(List<Map<String, String>> flatJson) {
+        Set<String> headers = new TreeSet<String>();
+        for (Map<String, String> map : flatJson) {
+        	headers.addAll(map.keySet());
+        }
+        return headers;
+    }    
 }
