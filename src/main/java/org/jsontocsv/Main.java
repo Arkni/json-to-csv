@@ -20,6 +20,7 @@ import java.io.File;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jsontocsv.parser.JSONFlattener;
 import org.jsontocsv.writer.CSVWriter;
